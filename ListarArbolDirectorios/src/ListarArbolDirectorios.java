@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +14,22 @@ import java.util.TimerTask;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
+
 import java.io.*;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
  
 /*implements NativeKeyListener */
 public class ListarArbolDirectorios extends TimerTask {
 	
 	public static String filename = "listado.txt";
-	public static String path = "C:\\Users\\KRO77\\Downloads";
+	public static String path = "C:\\Users\\Juan Pablo Abad\\Downloads";
 	
     public static void main(String[] args) throws IOException {
     	//EscribirEnArchivoDeTexto();
@@ -200,7 +208,38 @@ public class ListarArbolDirectorios extends TimerTask {
     }
     
     public static void sendMail(String newPath) {
-//    	 Add code using https://www.tutorialspoint.com/java/java_sending_email.htm
+    	 final String username = "jpabadlz@gmail.com";
+        final String password = "jnalpablo13";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+          new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+          });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("your_user_name@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse("to_email_address@domain.com"));
+            message.setSubject("Practica Sistemas Operativos");
+            message.setText(newPath);
+
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     //https://loquemeinteresadelared.wordpress.com/2016/02/15/como-detectar-si-un-fichero-ha-sido-creado-modificado-o-borrado-utilizando-java/
