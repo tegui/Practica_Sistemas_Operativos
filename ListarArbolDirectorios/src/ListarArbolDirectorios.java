@@ -29,7 +29,7 @@ import javax.mail.internet.MimeMessage;
 public class ListarArbolDirectorios extends TimerTask {
 	
 	public static String filename = "listado.txt";
-	public static String path = "C:\\Users\\Juan Pablo Abad\\Downloads";
+	public static String path = "C:/testfolder";
 	
     public static void main(String[] args) throws IOException {
     	//EscribirEnArchivoDeTexto();
