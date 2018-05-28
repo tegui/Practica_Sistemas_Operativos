@@ -87,8 +87,8 @@ class Enteros {
         TiempoInicial = System.nanoTime();
         Random rdmInteger = new Random();
 
-        for (int i = 0; i < 5000000; i++) {
-            VectorINT.add(rdmInteger.nextInt() * 5000000);
+        for (int i = 0; i < 1500000; i++) {
+            VectorINT.add(rdmInteger.nextInt() * 1500000);
         }
 
         try {
@@ -98,7 +98,7 @@ class Enteros {
             FileWriter escribirIntegers = new FileWriter(archivoIntegers, true);
 
             //Escribimos en el archivo con el metodo write
-            for (int i = 0; i < 5000000; i++) {
+            for (int i = 0; i < 1500000; i++) {
                 escribirIntegers.write(VectorINT.get(i) + "\r" + "\n");
             }
 
@@ -340,8 +340,8 @@ class Flotantes {
         TiempoInicial = System.nanoTime();
         Random rdmDouble = new Random();
 
-        for (int i = 0; i < 5000000; i++) {
-            VectorDOUBLE.add(rdmDouble.nextDouble() * 5000000);
+        for (int i = 0; i < 1500000; i++) {
+            VectorDOUBLE.add(rdmDouble.nextDouble() * 1500000);
         }
 
         try {
@@ -352,7 +352,7 @@ class Flotantes {
             FileWriter escribirDoubles = new FileWriter(archivoDoubles, true);
 
             //Escribimos en el archivo con el metodo write
-            for (int i = 0; i < 5000000; i++) {
+            for (int i = 0; i < 1500000; i++) {
                 escribirDoubles.write(VectorDOUBLE.get(i) + "\t" + "\n");
             }
 
