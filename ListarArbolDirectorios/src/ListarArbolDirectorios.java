@@ -36,7 +36,7 @@ public class ListarArbolDirectorios extends TimerTask {
     	
     	//ListarDirectorios(new File("C:/Users/Juan Pablo Abad/SO")); //Replace this with a suitable directory
     	
-    	ListarDirectoriosEnArchivoDeTexto(new File(ListarArbolDirectorios.path));
+    	//ListarDirectoriosEnArchivoDeTexto(new File(ListarArbolDirectorios.path));
     	
     	DetectarNuevosArchivosEnDirectorio();
     	
@@ -125,11 +125,54 @@ public class ListarArbolDirectorios extends TimerTask {
 //    	timer.schedule(new ListarArbolDirectorios(), 0, 5000);
     }
     
+    public static void ListarUltimoDirectorioEnArchivoDeTexto(File[] listainicial,File modificada) throws FileNotFoundException, IOException{
+    	Boolean valor =false;
+    	String filename = ListarArbolDirectorios.filename;
+    	FileWriter archivoDeTexto = null;
+        PrintWriter pw = null;
+        try{
+        	archivoDeTexto = new FileWriter(filename,true);
+	        pw = new PrintWriter(archivoDeTexto);
+	    	
+	        File listFile[] = modificada.listFiles();
+	        if (listFile != null) {
+	            for (int i = 0; i < listFile.length; i++) {
+	            	for (int j = 0; j < listainicial.length; i++) {
+		                if (listFile[i]==listainicial[j]) {
+		                	valor = true;
+		                	continue;
+		                    //System.out.println(listFile[i].getPath());
+		                }
+	            	}
+	            	if(valor== false){
+	            		pw.println(listFile[i].getPath());
+	            	}
+	            }
+	        }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+	    	try {
+	            // Nuevamente aprovechamos el finally para 
+	            // asegurarnos que se cierra el fichero.
+	            if (null != archivoDeTexto)
+	            	archivoDeTexto.close();
+	            } catch (Exception e2) {
+	               e2.printStackTrace();
+	            }
+        }
+//        Timer timer = new Timer(true);
+//    	timer.schedule(new ListarArbolDirectorios(), 0, 5000);
+    }
+    
+    
     public static void DetectarNuevosArchivosEnDirectorio()throws IOException{
     	Path dir = Paths.get(ListarArbolDirectorios.path);
         WatchService service = FileSystems.getDefault().newWatchService();
         WatchKey key = dir.register(service, ENTRY_CREATE);
         ListarDirectoriosEnArchivoDeTexto(new File(ListarArbolDirectorios.path));
+        File list1[] = new File(ListarArbolDirectorios.path).listFiles();
         System.out.println("Watching directory: "+dir.toString());
         for(;;){
             WatchKey key1;
@@ -157,6 +200,7 @@ public class ListarArbolDirectorios extends TimerTask {
                     x.printStackTrace();
                 }
             }
+            ListarUltimoDirectorioEnArchivoDeTexto(list1,new File(ListarArbolDirectorios.path));
             boolean valid = key.reset();
             if (!valid) {
                 break;
